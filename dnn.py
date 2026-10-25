@@ -21,7 +21,7 @@ def build_dnn(parameters, input_size):
         layers.append(nn.BatchNorm1d(parameters["hidden_size_1"]))
 
     layers.extend([nn.Dropout(parameters["dropout_1"]),
-                   nn.Linear(parameters["hidden_size_1"],parameters["hidden_size_2"]),
+                   nn.Linear(parameters["hidden_size_1"], parameters["hidden_size_2"]),
                    activation_class(),
                    nn.Dropout(parameters["dropout_2"]),
                    nn.Linear(parameters["hidden_size_2"], 1)])
@@ -120,7 +120,7 @@ class TorchDNNRegressor(RegressorMixin, BaseEstimator):
         features = torch.tensor(np.asarray(X), dtype=torch.float32, device=self.device_)
 
         with torch.no_grad():
-            scaled_predictions = (self.model_(features).cpu().numpy().ravel())
+            scaled_predictions = self.model_(features).cpu().numpy().ravel()
 
         # Restore the original log-price scale
         return scaled_predictions * self.target_std_ + self.target_mean_

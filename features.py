@@ -6,7 +6,7 @@ from config import TARGET
 def remove_training_outliers(data):
     """Remove the two flagged large low-price houses"""
 
-    outlier_mask = ((data["GrLivArea"] > 4000) & (data[TARGET] < 300000))
+    outlier_mask = (data["GrLivArea"] > 4000) & (data[TARGET] < 300000)
 
     return data.loc[~outlier_mask].copy()
 

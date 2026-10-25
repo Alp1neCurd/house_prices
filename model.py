@@ -39,7 +39,7 @@ def make_model_pipeline(model_name="voting"):
     if model_name == "voting":
         return VotingRegressor(estimators=[("catboost", make_model_pipeline("catboost")),
                                            ("svr", make_model_pipeline("svr")),
-                                           ("lasso", make_single_model_pipeline(Lasso(**LASSO_PARAMS)))],n_jobs=1)
+                                           ("lasso", make_single_model_pipeline(Lasso(**LASSO_PARAMS)))], n_jobs=1)
 
     if model_name == "catboost":
         model = CatBoostRegressor(**CATBOOST_PARAMS)

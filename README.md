@@ -7,17 +7,17 @@ RBF SVR achieved the best submitted public score
 
 ## Files
 
-- `main.py` — evaluation, training and submission export
-- `config.py` — paths, model selection and parameters
-- `features.py` — cleaning and feature engineering
-- `model.py` — preprocessing and model construction
-- `validation.py` — five-fold cross-validation
-- `dnn.py` — PyTorch regressor
-- `house_prices_experiments.ipynb` — EDA, Optuna tuning, comparisons and error analysis
+- `main.py` - evaluation, training and submission export
+- `config.py` - paths, model selection and parameters
+- `features.py` - cleaning and feature engineering
+- `model.py` - preprocessing and model construction
+- `validation.py` - five-fold cross-validation
+- `dnn.py` - PyTorch regressor
+- `house_prices_experiments.ipynb` - EDA, tuning, comparisons and error analysis
 
 ## Setup
 
-The notebook was run with Python 3.14.6
+Tested with Python 3.14.6
 
 Download `train.csv` and `test.csv` from the [competition](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data) and place them in `data/`
 
@@ -26,41 +26,51 @@ From the project directory:
 ```powershell
 py -3.14 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
+py -m pip install -r requirements.txt
 ```
 
 For DNN:
 
 ```powershell
-python -m pip install -r requirements_dnn.txt
+py -m pip install -r requirements_dnn.txt
 ```
 
 For the complete notebook environment:
 
 ```powershell
-python -m pip install -r requirements_notebook.txt
+py -m pip install -r requirements_notebook.txt
 ```
+
+On Linux and macOS:
+
+```bash
+python3.14 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+Use `python` instead of `py` for subsequent commands on Linux and macOS
 
 ## Run
 
 Run the model selected by `MODEL_NAME` in `config.py`, currently Voting:
 
 ```powershell
-python main.py
+py main.py
 ```
 
 Override the model:
 
 ```powershell
-python main.py --model svr
-python main.py --model catboost
-python main.py --model dnn
+py main.py --model svr
+py main.py --model catboost
+py main.py --model dnn
 ```
 
 Also export averaged predictions from five training folds:
 
 ```powershell
-python main.py --five-fold
+py main.py --five-fold
 ```
 
 The script prints validation metrics and saves CSV files in `submissions/`
@@ -104,15 +114,18 @@ CV results come from the notebook, and public scores come from the submitted CSV
 | Bagging Decision Tree | 0.1307 | 0.0073 | 0.14033 |
 | KNN | 0.1573 | 0.0111 | 0.16582 |
 | Decision Tree | 0.1753 | 0.0122 | 0.18492 |
-| Equal Voting, five-fold submission | — | — | 0.12184 |
+| Equal Voting, five-fold submission | - | - | 0.12184 |
 
 Voting had the lowest mean CV RMSE, while SVR had the best public score
 The public leaderboard is used as an external check rather than the model selection criterion
 
 DNN tuning uses different seeds across folds, so its notebook tuning score may differ from the script's CV result
+Embeddings did not improve the DNN with the transferred hyperparameters
 
 ## Limitations
 
 - Tuning and model selection reuse the same folds
 - Main CV excludes the two flagged houses and may understate errors on unusual properties
-- Small score differences and GPU training results may vary between runs
+- The benefit of outlier removal may depend on which unusual houses appear in training and validation
+- Small score differences do not establish a reliable ranking
+- GPU training results may vary between runs
