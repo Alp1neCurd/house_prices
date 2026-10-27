@@ -26,7 +26,7 @@ SUBMISSION_PATHS = {"voting": SUBMISSION_DIR / "house_prices_equal_voting.csv",
                     "svr": SUBMISSION_DIR / "house_prices_rbf_svr.csv",
                     "dnn": SUBMISSION_DIR / "house_prices_pytorch_dnn.csv"}
 
-# Use the parameters selected in the notebook
+# Best CatBoost One-Hot parameters from Optuna tuning
 CATBOOST_PARAMS = {"iterations": 1200,
                    "learning_rate": 0.030023005574603863,
                    "depth": 5,
@@ -39,14 +39,17 @@ CATBOOST_PARAMS = {"iterations": 1200,
                    "allow_writing_files": False,
                    "thread_count": 1}
 
+# Best RBF SVR parameters from Optuna tuning
 SVR_PARAMS = {"kernel": "rbf",
               "C": 18.4625000498051,
               "epsilon": 0.004342457951180244,
               "gamma": 0.00042166943832873887}
 
+# Best Lasso parameters from Optuna tuning
 LASSO_PARAMS = {"alpha": 0.0005098460288377917,
                 "max_iter": 20000}
 
+# Best DNN parameters from Optuna tuning
 DNN_PARAMS = {"hidden_size_1": 256,
               "hidden_size_2": 64,
               "dropout_1": 0.4,
