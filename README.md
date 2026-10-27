@@ -17,7 +17,8 @@ RBF SVR achieved the best submitted public score
 
 ## Setup
 
-Tested with Python 3.14.6
+Requires Python 3.12 or newer
+Developed and tested with Python 3.14.6
 
 Download `train.csv` and `test.csv` from the [competition](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data) and place them in `data/`
 
@@ -76,6 +77,9 @@ py main.py --five-fold
 The script prints validation metrics and saves CSV files in `submissions/`
 DNN uses CUDA when available and otherwise runs on CPU
 Other experimental models and categorical embeddings are available in the notebook
+
+The number of training epochs was selected through cross-validation
+Early stopping was not used
 
 ## Method
 
@@ -148,7 +152,7 @@ The public leaderboard is used as an external check rather than the model select
 
 ## Limitations
 
-- Tuning and model selection reuse the same folds
+- CV and OOF diagnostics reuse the folds used for tuning and model selection and are not independent final estimates
 - Main CV excludes the two flagged houses and may understate errors on unusual properties
 - The benefit of outlier removal may depend on which unusual houses appear in training and validation
 - Small score differences do not establish a reliable ranking
